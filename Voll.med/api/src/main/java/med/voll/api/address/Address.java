@@ -18,4 +18,16 @@ public class Address {
     private String state;
     private String extra;
     private String number;
+
+    public Address(AddressRegisterData data) {
+        this.street = data.street();
+        this.number = data.number();
+        this.cep = data.cep();
+        this.neighborhood = data.neighborhood();
+        this.city = data.city();
+        this.extra = data.extra();
+        this.state = data.state();
+    }
+
+
 }

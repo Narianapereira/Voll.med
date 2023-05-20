@@ -1,8 +1,22 @@
 package med.voll.api.patients;
 
-import med.voll.api.address.AddressData;
-import med.voll.api.doctors.Specialty;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import med.voll.api.address.Address;
+import med.voll.api.address.AddressRegisterData;
 
-public record PatientRegisterData(String name, String email, String phonenumber, String cpf, AddressData
-        address) {
+public record PatientRegisterData(
+        @NotBlank
+        String name,
+        @NotBlank
+        String email,
+        @NotBlank
+        String phonenumber,
+        @NotBlank @Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}")
+        String cpf,
+        @NotNull
+        @Valid
+        AddressRegisterData address) {
 }
