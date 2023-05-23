@@ -34,4 +34,16 @@ public class Doctor {
         this.address = new Address(data.address());
         this.phonenumber = data.phonenumber();
     }
+
+    public void udpateInfo(DoctorUpdateData data) {
+        if(data.name() != null) {
+            this.name = data.name();
+        }
+        if(data.phonenumber() != null){
+            this.phonenumber = data.phonenumber();
+        }
+        if (data.address() != null){
+            this.address.updateInfo(data.address());
+        }
+    }
 }
