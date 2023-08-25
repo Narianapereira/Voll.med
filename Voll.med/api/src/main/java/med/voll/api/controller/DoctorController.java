@@ -2,6 +2,7 @@ package med.voll.api.controller;
 
 import jakarta.validation.Valid;
 import med.voll.api.doctors.*;
+import med.voll.api.doctors.DoctorDetailData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +30,6 @@ public class DoctorController {
     }
 
     @GetMapping
-    //@RequestMapping("/list")
     public ResponseEntity<Page<DoctorList>> getAll(@PageableDefault(size=10, sort={"name"}) Pageable pagination){
         var page = repository.findAllByActiveTrue(pagination).map(DoctorList::new);
     return ResponseEntity.ok(page);
@@ -49,5 +49,11 @@ public class DoctorController {
         Doctor doc = repository.getReferenceById(id);
         doc.delete();
     return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detailDoctor(@PathVariable Long id){
+        Doctor doc = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DoctorDetailData(doc));
     }
 }
