@@ -1,8 +1,11 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
-import med.voll.api.doctors.*;
-import med.voll.api.doctors.DoctorDetailData;
+import med.voll.api.domain.doctors.*;
+import med.voll.api.domain.doctors.Doctor;
+import med.voll.api.domain.doctors.DoctorDetailData;
+import med.voll.api.domain.doctors.DoctorList;
+import med.voll.api.domain.doctors.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

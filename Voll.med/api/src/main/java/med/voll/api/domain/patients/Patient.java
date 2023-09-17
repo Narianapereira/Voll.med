@@ -1,18 +1,18 @@
-package med.voll.api.doctors;
+package med.voll.api.domain.patients;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.address.Address;
-@Table(name = "doctor")
-@Entity(name = "doctor")
+import med.voll.api.domain.address.Address;
+@Entity(name = "patient")
+@Table(name = "patient")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Doctor {
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,24 +20,22 @@ public class Doctor {
     private String name;
     private String email;
     private String phonenumber;
-    private String crm;
-    @Enumerated(EnumType.STRING)
-    private Specialty specialty;
+    private String cpf;
     @Embedded
     private Address address;
     private Boolean active;
 
-    public Doctor(DoctorResgisterData data) {
+
+    public Patient(PatientRegisterData data){
         this.active = true;
         this.name = data.name();
         this.email = data.email();
-        this.specialty = data.specialty();
-        this.crm = data.crm();
-        this.address = new Address(data.address());
+        this.cpf = data.cpf();
         this.phonenumber = data.phonenumber();
+        this.address = new Address(data.address());
     }
 
-    public void udpateInfo(DoctorUpdateData data) {
+    public void udpateInfo(PatientUpdateData data) {
         if(data.name() != null) {
             this.name = data.name();
         }
@@ -46,6 +44,9 @@ public class Doctor {
         }
         if (data.address() != null){
             this.address.updateInfo(data.address());
+        }
+        if(data.email() != null){
+            this.email = data.email();
         }
     }
 
