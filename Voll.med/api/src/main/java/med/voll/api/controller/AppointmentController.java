@@ -15,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -32,13 +29,14 @@ public class AppointmentController {
     @Transactional
     public ResponseEntity schedule(@RequestBody @Valid ScheduleAppointmentData data) throws ValidateException {
         service.schedule(data);
-       return ResponseEntity.ok(new DetailedAppointmentData(null, null, null));
+       return ResponseEntity.ok(new DetailedAppointmentData(data.doctorId(),
+               data.patientId(), data.date()));
     }
 
-    @PostMapping
+    @PutMapping
     @Transactional
     public ResponseEntity cancel(@RequestBody @Valid AppointmentCancelData data){
-
-
+        service.cancel(data);
+        return ResponseEntity.ok().build();
     }
 }
