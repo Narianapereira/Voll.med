@@ -1,5 +1,6 @@
 package med.voll.api.domain.appointments;
 
+import med.voll.api.domain.appointments.validations.AppointmentScheduleValidator;
 import med.voll.api.domain.doctors.Doctor;
 import med.voll.api.domain.doctors.DoctorRepository;
 import med.voll.api.domain.patients.Patient;
@@ -24,6 +25,9 @@ public class AppointmentScheduleService {
     @Autowired
     private PatientRepository patRep;
 
+    @Autowired
+    private List<AppointmentScheduleValidator> validators;
+
 
     public void schedule(ScheduleAppointmentData data) throws ValidateException {
         if(!patRep.existsById(data.patientId())){
@@ -33,6 +37,8 @@ public class AppointmentScheduleService {
         if(data.doctorId() != null && !docRep.existsById(data.doctorId())){
             throw new ValidateException("Id do paciente não existe");
         }
+
+        validators.forEach(v -> v.validate(data));
 
         Doctor doctor = chooseDoctor(data);
         Patient patient = patRep.getReferenceById(data.patientId());
