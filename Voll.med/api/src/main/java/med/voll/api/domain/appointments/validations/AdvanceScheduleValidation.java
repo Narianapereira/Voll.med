@@ -14,7 +14,7 @@ public class AdvanceScheduleValidation implements AppointmentScheduleValidator{
 
         LocalDateTime scheduleHour = data.date();
         LocalDateTime now = LocalDateTime.now();
-        long differenceInMin = Duration.between(scheduleHour, now).toMinutes();
+        long differenceInMin = Duration.between(now, scheduleHour).toMinutes();
         if(differenceInMin < 30){
             throw new ValidateException("Antecedência deve ser de 30 minutos");
         }

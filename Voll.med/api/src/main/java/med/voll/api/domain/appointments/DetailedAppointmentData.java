@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 public record DetailedAppointmentData(
 
+        Long id,
         Long doctorId,
         @NotNull
         Long patientId,

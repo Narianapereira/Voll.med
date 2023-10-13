@@ -16,8 +16,10 @@ public class RepeatedPatientValidation implements AppointmentScheduleValidator{
 
     public void validate(ScheduleAppointmentData data){
 
-    Appointment previousApp = repository.getTodayAppointmentByPatient(data.patientId(), data.date().getDayOfMonth());
-    if(previousApp != null){
+        var firstAppointment = data.date().withHour(7);
+        var lastAppointment = data.date().withHour(18);
+    Boolean previousApp = repository.existsByPatientIdAndDateBetween(data.patientId(), firstAppointment, lastAppointment);
+    if(previousApp){
         throw new  ValidateException("não é possível agendar o paciente duas vezes no dia");
     }
 

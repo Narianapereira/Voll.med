@@ -28,9 +28,8 @@ public class AppointmentController {
     @PostMapping
     @Transactional
     public ResponseEntity schedule(@RequestBody @Valid ScheduleAppointmentData data) throws ValidateException {
-        service.schedule(data);
-       return ResponseEntity.ok(new DetailedAppointmentData(data.doctorId(),
-               data.patientId(), data.date()));
+        DetailedAppointmentData appointmentData = service.schedule(data);
+        return ResponseEntity.ok(appointmentData);
     }
 
     @PutMapping

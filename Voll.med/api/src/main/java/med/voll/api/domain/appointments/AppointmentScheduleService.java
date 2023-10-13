@@ -29,7 +29,7 @@ public class AppointmentScheduleService {
     private List<AppointmentScheduleValidator> validators;
 
 
-    public void schedule(ScheduleAppointmentData data) throws ValidateException {
+    public DetailedAppointmentData schedule(ScheduleAppointmentData data) throws ValidateException {
         if(!patRep.existsById(data.patientId())){
             throw new ValidateException("Id do paciente não existe");
         }
@@ -46,6 +46,8 @@ public class AppointmentScheduleService {
         Appointment appointment = new Appointment(null, doctor, patient, data.date(),null);
 
         appointmentRepository.save(appointment);
+        return new DetailedAppointmentData(appointment.getId(), doctor.getId(),patient.getId(),
+                appointment.getDate());
     }
 
     private Doctor chooseDoctor(ScheduleAppointmentData data) {
